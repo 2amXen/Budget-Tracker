@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)file:///C:/Users/63967/Downloads/Fixed%20needs%20aesthetic%20adjustment.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Tracker</title>
+  <style>
+    /* Reset default styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    /* Container for the main content */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Section Titles */
+    h1, h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    /* Form container */
+    .form-container {
+      margin-bottom: 20px;
+    }
+
+    /* Form fields */
+    input[type="number"],
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Buttons */
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Summary box */
+    .summary {
+      background-color: #f9f9f9;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    /* Text */
+    p {
+      font-size: 16px;
+    }
+
+    /* Progress bar styles */
+    .progress-bar {
+      width: 100%;
+      background-color: #f3f3f3;
+      border-radius: 4px;
+      height: 20px;
+      margin: 10px 0;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background-color: #4CAF50; /* Default green */
+      border-radius: 4px;
+    }
+
+    .progress-bar-fill.overgoal {
+      background-color: #F44336; /* Red color for overgoal */
+    }
+
+    /* Table styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    /* Recurring expense tag */
+    .recurring-tag {
+      color: red;
+      font-weight: bold;
+      padding: 5px 10px;
+      border: 2px solid red;
+      border-radius: 4px;
+      background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+      display: inline-block; 
+    }
+
+    /* Responsive styles */
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+
+      input[type="number"],
+      input[type="text"],
+      select,
+      button {
+        width: 100%;
+        font-size: 16px;
+      }
+
+      table {
+        font-size: 14px; 
+        overflow-x: auto;
+        display: block;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+
+      .summary {
+        padding: 15px;
+      }
+
+      .progress-bar {
+        height: 15px; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Budget Tracker</h1>
+
+    <!-- Income Form -->
+    <div class="form-container">
+      <h2>Add Income</h2>
+      <form id="income-form">
+        <input type="number" id="income-amount" placeholder="Income Amount" required="">
+        <select id="income-category">
+          <option value="Salary">Salary</option>
+          <option value="Side Job">Side Job</option>
+          <option value="Investment">Investment</option>
+          <option value="Freelance">Freelance</option>
+          <option value="Rental Income">Rental Income</option>
+          <option value="Bonus">Bonus</option>
+          <option value="Gift">Gift</option>
+          <option value="Other">Other</option>
+        </select>
+        <button type="submit">Add Income</button>
+      </form>
+    </div>
+
+    <hr><br>
+
+    <!-- Expense Form -->
+    <div class="form-container">
+      <h2>Add Expense</h2>
+      <form id="expense-form">
+        <input type="text" id="expense-name" placeholder="Expense Name" required="">
+        <input type="number" id="expense-amount" placeholder="Expense Amount" required="">
+        <select id="expense-category">
+          <option value="Groceries">Groceries</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Housing">Housing</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Dining Out">Dining Out</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Health &amp; Medical">Health &amp; Medical</option>
+          <option value="Insurance">Insurance</option>
+          <option value="Personal Care">Personal Care</option>
+          <option value="Education">Education</option>
+          <option value="Subscriptions">Subscriptions</option>
+          <option value="Pet Expenses">Pet Expenses</option>
+          <option value="Savings &amp; Investments">Savings &amp; Investments</option>
+          <option value="Gifts &amp; Donations">Gifts &amp; Donations</option>
+          <option value="Miscellaneous">Miscellaneous</option>
+        </select>
+        <input type="checkbox" id="recurring"> Is this a recurring expense?
+        <button type="submit">Add Expense</button>
+      </form>
+    </div>
+
+    <hr><br>
+
+    <!-- Savings Goal -->
+    <div class="form-container">
+      <h2>Set Savings Goal</h2>
+      <form id="savings-form">
+        <input type="number" id="goal-amount" placeholder="Goal Amount" required="">
+        <button type="submit" id="set-goal-button">Set Goal</button>
+      </form>
+    </div>
+
+    <hr><br>
+
+    <!-- Summary Section -->
+    <div class="summary">
+      <h3>Summary</h3>
+      <p><strong>Total Income:</strong> ₱<span id="total-income">0</span></p>
+      <p><strong>Total Expenses:</strong> ₱<span id="total-expenses">0</span></p>
+      <p><strong>Remaining Budget:</strong> ₱<span id="remaining-budget">0</span></p>
+
+      <h4>Savings Progress</h4>
+      <p>Savings Goal: ₱<span id="goal-amount-display">0</span> / ₱<span id="goal-amount-display-total">0</span></p>
+      <div class="progress-bar">
+        <div id="goal-progress" class="progress-bar-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <hr><br>
+
+    <!-- Save and Restore Section -->
+    <h3>Save and Restore Data</h3><br>
+    
+    <button id="save-button">Save Data</button>
+    <textarea style="width: 100%;" id="restore-input" placeholder="Paste your saved data here"></textarea>
+    <button id="restore-button">Restore Data</button>
+
+    <hr><br>
+
+    <!-- Expense History Table -->
+    <h3>Expense/Income History</h3>
+    <table id="expense-history">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Tag</th>
+        </tr>
+      </thead>
+      <tbody id="expense-list"></tbody>
+    </table>
+  </div>
+
+  <script>
+    // Initialize variables
+    let totalIncome = 0;
+    let totalExpenses = 0;
+    let savingsGoal = 0;
+    let totalSavings = 0;
+    let expenseHistory = [];
+
+    const incomeForm = document.getElementById('income-form');
+    const incomeAmountInput = document.getElementById('income-amount');
+    const incomeCategoryInput = document.getElementById('income-category');
+    const expenseForm = document.getElementById('expense-form');
+    const expenseNameInput = document.getElementById('expense-name');
+    const expenseAmountInput = document.getElementById('expense-amount');
+    const expenseCategoryInput = document.getElementById('expense-category');
+    const recurringExpenseInput = document.getElementById('recurring');
+    const savingsForm = document.getElementById('savings-form');
+    const savingsGoalInput = document.getElementById('goal-amount');
+    const expenseList = document.getElementById('expense-list');
+    const saveButton = document.getElementById('save-button');
+    const restoreButton = document.getElementById('restore-button');
+    const restoreInput = document.getElementById('restore-input');
+
+    // Function to update summary display
+    const updateSummary = () => {
+      const remainingBudget = totalIncome - totalExpenses;
+      const goalProgressPercentage = (totalSavings / savingsGoal) * 100;
+
+      document.getElementById('total-income').textContent = totalIncome;
+      document.getElementById('total-expenses').textContent = totalExpenses;
+      document.getElementById('remaining-budget').textContent = remainingBudget;
+
+      const goalProgressElement = document.getElementById('goal-progress');
+      goalProgressElement.style.width = `${goalProgressPercentage}%`;
+
+      if (goalProgressPercentage >= 100) {
+        goalProgressElement.classList.add('overgoal');
+      } else {
+        goalProgressElement.classList.remove('overgoal');
+      }
+
+      // Update the goal-amount-display with remaining budget
+      document.getElementById('goal-amount-display').textContent = remainingBudget;
+
+      // No change to goal-amount-display-total
+      document.getElementById('goal-amount-display-total').textContent = savingsGoal;
+    };
+
+    // Event listener for adding income
+    incomeForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const incomeAmount = parseFloat(incomeAmountInput.value);
+      const incomeCategory = incomeCategoryInput.value;
+
+      if (!isNaN(incomeAmount)) {
+        totalIncome += incomeAmount;
+        totalSavings += incomeAmount;
+
+        // Add income entry to expense history table
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td>${new Date().toLocaleDateString()}</td>
+          <td>${incomeCategory}</td>
+          <td>Income</td>
+          <td>₱${incomeAmount}</td>
+          <td></td>
+        `;
+        expenseList.appendChild(newRow);
+
+        updateSummary();
+        incomeForm.reset();
+      }
+    });
+
+    // Event listener for adding expense
+    expenseForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const expenseName = expenseNameInput.value;
+      const expenseAmount = parseFloat(expenseAmountInput.value);
+      const expenseCategory = expenseCategoryInput.value;
+      const isRecurring = recurringExpenseInput.checked;
+
+      if (!isNaN(expenseAmount)) {
+        totalExpenses += expenseAmount;
+        totalSavings -= expenseAmount;
+
+        // Add expense entry to expense history table
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+          <td>${new Date().toLocaleDateString()}</td>
+          <td>${expenseCategory}</td>
+          <td>${expenseName}</td>
+          <td>₱${expenseAmount}</td>
+          <td>${isRecurring ? '<span class="recurring-tag">Recurring</span>' : ''}</td>
+        `;
+        expenseList.appendChild(newRow);
+
+        updateSummary();
+        expenseForm.reset();
+      }
+    });
+
+    // Event listener for setting the savings goal
+    savingsForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const goalAmount = parseFloat(savingsGoalInput.value);
+
+      if (!isNaN(goalAmount)) {
+        savingsGoal = goalAmount;
+        updateSummary();
+        savingsForm.reset();
+      }
+    });
+
+    // Save button event listener (with clipboard copy)
+    saveButton.addEventListener('click', () => {
+      const data = {
+        totalIncome,
+        totalExpenses,
+        savingsGoal,
+        totalSavings,
+        expenseHistory: expenseList.innerHTML,
+      };
+      const dataString = JSON.stringify(data);
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(dataString).then(() => {
+        alert('Data saved and copied to clipboard!');
+      }).catch((error) => {
+        alert('Failed to copy data to clipboard: ' + error);
+      });
+    });
+
+    // Restore button event listener
+    restoreButton.addEventListener('click', () => {
+      try {
+        const data = JSON.parse(restoreInput.value);
+        totalIncome = data.totalIncome || 0;
+        totalExpenses = data.totalExpenses || 0;
+        savingsGoal = data.savingsGoal || 0;
+        totalSavings = data.totalSavings || 0;
+        expenseList.innerHTML = data.expenseHistory || '';
+
+        updateSummary();
+        alert('Data restored successfully!');
+      } catch (error) {
+        alert('Invalid data! Could not restore.');
+      }
+    });
+  </script>
+
+</body></html>
